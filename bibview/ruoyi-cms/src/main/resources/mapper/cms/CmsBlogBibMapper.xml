@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.cms.blog.mapper.CmsBlogBibMapper">
+
+    <resultMap type="CmsBlogBib" id="CmsBlogBibResult">
+        <result property="blogId" column="blog_id"/>
+        <result property="bibId" column="bib_id"/>
+    </resultMap>
+
+    <sql id="selectCmsBlogBibVo">
+        select blog_id, bib_id
+        from cms_blog_bib
+    </sql>
+
+    <select id="selectCmsBlogBibList" parameterType="CmsBlogBib" resultMap="CmsBlogBibResult">
+        <include refid="selectCmsBlogBibVo"/>
+        <where>
+            <if test="bibId != null ">and bib_id = #{bibId}</if>
+        </where>
+    </select>
+
+    <select id="selectCmsBlogBibByBlogId" parameterType="Long" resultMap="CmsBlogBibResult">
+        <include refid="selectCmsBlogBibVo"/>
+        where blog_id = #{blogId}
+    </select>
+
+    <insert id="insertCmsBlogBib" parameterType="CmsBlogBib">
+        insert into cms_blog_bib
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="blogId != null">blog_id,</if>
+            <if test="bibId != null">bib_id,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="blogId != null">#{blogId},</if>
+            <if test="bibId != null">#{bibId},</if>
+        </trim>
+    </insert>
+
+    <insert id="batchBlogBib">
+        insert into cms_blog_bib(blog_id, bib_id) values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.blogId},#{item.bibId})
+        </foreach>
+    </insert>
+
+    <update id="updateCmsBlogBib" parameterType="CmsBlogBib">
+        update cms_blog_bib
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="bibId != null">bib_id = #{bibId},</if>
+        </trim>
+        where blog_id = #{blogId}
+    </update>
+
+    <delete id="deleteCmsBlogBibByBlogId" parameterType="Long">
+        delete
+        from cms_blog_bib
+        where blog_id = #{blogId}
+    </delete>
+
+    <delete id="deleteCmsBlogBibByBlogIds" parameterType="String">
+        delete from cms_blog_bib where blog_id in
+        <foreach item="blogId" collection="array" open="(" separator="," close=")">
+            #{blogId}
+        </foreach>
+    </delete>
+</mapper>

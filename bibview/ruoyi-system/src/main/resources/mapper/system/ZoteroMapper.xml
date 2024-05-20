@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.ZoteroMapper">
+
+    <resultMap type="Zotero" id="ZoteroResult">
+        <result property="key"    column="key"    />
+        <result property="id"    column="id"    />
+        <result property="group"    column="group"    />
+        <result property="groupid"    column="groupId"    />
+    </resultMap>
+
+    <sql id="selectZoteroVo">
+        select `key`, id, `group`, groupId from zotero
+    </sql>
+
+    <select id="selectZoteroList" parameterType="Zotero" resultMap="ZoteroResult">
+        <include refid="selectZoteroVo"/>
+        <where>
+            <if test="key != null  and key != ''"> and `key` = #{key}</if>
+            <if test="group != null  and group != ''"> and `group` = #{group}</if>
+            <if test="groupid != null "> and groupId = #{groupid}</if>
+        </where>
+    </select>
+
+    <select id="selectZoteroById" parameterType="Long" resultMap="ZoteroResult">
+        <include refid="selectZoteroVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertZotero" parameterType="Zotero" useGeneratedKeys="true" keyProperty="id">
+        insert into zotero
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="key != null">`key`,</if>
+            <if test="group != null">`group`,</if>
+            <if test="groupid != null">groupId,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="key != null">#{key},</if>
+            <if test="group != null">#{group},</if>
+            <if test="groupid != null">#{groupid},</if>
+        </trim>
+    </insert>
+
+    <update id="updateZotero" parameterType="Zotero">
+        update zotero
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="key != null">`key` = #{key},</if>
+            <if test="group != null">`group` = #{group},</if>
+            <if test="groupid != null">groupId = #{groupid},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteZoteroById" parameterType="Long">
+        delete from zotero where id = #{id}
+    </delete>
+
+    <delete id="deleteZoteroByIds" parameterType="String">
+        delete from zotero where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+
+</mapper>
