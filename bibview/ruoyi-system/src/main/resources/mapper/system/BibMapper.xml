@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.BibMapper">
+
+    <resultMap type="Bib" id="BibResult">
+        <result property="id"    column="id"    />
+        <result property="title"    column="title"    />
+        <result property="content"    column="content"    />
+        <result property="author"    column="author"    />
+        <result property="abstractNote"    column="abstract_note"    />
+        <result property="libraryCatalog"    column="library_catalog"    />
+        <result property="issue"    column="issue"    />
+        <result property="issn"    column="issn"    />
+        <result property="doi"    column="doi"    />
+        <result property="key"    column="key"    />
+        <result property="archiveLocation"    column="archive_location"    />
+        <result property="extra"    column="extra"    />
+        <result property="rights"    column="rights"    />
+        <result property="collections"    column="collections"    />
+        <result property="accessDate"    column="access_date"    />
+        <result property="pages"    column="pages"    />
+        <result property="journalAbbreviation"    column="journal_abbreviation"    />
+        <result property="seriestitle"    column="seriesTitle"    />
+        <result property="publicationTitle"    column="publication_title"    />
+        <result property="version"    column="version"    />
+        <result property="url"    column="url"    />
+        <result property="dateAdded"    column="date_added"    />
+        <result property="dateModified"    column="date_modified"    />
+        <result property="shorttitle"    column="shortTitle"    />
+        <result property="language"    column="language"    />
+        <result property="creators"    column="creators"    />
+        <result property="seriesText"    column="series_text"    />
+        <result property="itemType"    column="item_type"    />
+        <result property="date"    column="date"    />
+        <result property="tags"    column="tags"    />
+        <result property="volume"    column="volume"    />
+        <result property="callNumber"    column="call_number"    />
+        <result property="series"    column="series"    />
+        <result property="relations"    column="relations"    />
+    </resultMap>
+
+    <sql id="selectBibVo">
+        select id, title, content, author, abstract_note, library_catalog, issue, issn, doi, `key`, archive_location, extra, rights, collections, access_date, pages, journal_abbreviation, seriesTitle, publication_title, version, url, date_added, date_modified, shortTitle, `language`, creators, series_text, item_type, `date`, tags, volume, call_number, series, relations from bib
+    </sql>
+
+    <select id="selectBibList" parameterType="Bib" resultMap="BibResult">
+        <include refid="selectBibVo"/>
+        <where>
+            <if test="title != null  and title != ''"> and title = #{title}</if>
+            <if test="content != null  and content != ''"> and content = #{content}</if>
+            <if test="author != null  and author != ''"> and author = #{author}</if>
+            <if test="abstractNote != null  and abstractNote != ''"> and abstract_note = #{abstractNote}</if>
+            <if test="libraryCatalog != null  and libraryCatalog != ''"> and library_catalog = #{libraryCatalog}</if>
+            <if test="issue != null  and issue != ''"> and issue = #{issue}</if>
+            <if test="issn != null  and issn != ''"> and issn = #{issn}</if>
+            <if test="doi != null  and doi != ''"> and doi = #{doi}</if>
+            <if test="key != null  and key != ''"> and `key` = #{key}</if>
+            <if test="archiveLocation != null  and archiveLocation != ''"> and archive_location = #{archiveLocation}</if>
+            <if test="extra != null  and extra != ''"> and extra = #{extra}</if>
+            <if test="rights != null  and rights != ''"> and rights = #{rights}</if>
+            <if test="collections != null  and collections != ''"> and collections = #{collections}</if>
+            <if test="accessDate != null "> and access_date = #{accessDate}</if>
+            <if test="pages != null  and pages != ''"> and pages = #{pages}</if>
+            <if test="journalAbbreviation != null  and journalAbbreviation != ''"> and journal_abbreviation = #{journalAbbreviation}</if>
+            <if test="seriestitle != null  and seriestitle != ''"> and seriesTitle = #{seriestitle}</if>
+            <if test="publicationTitle != null  and publicationTitle != ''"> and publication_title = #{publicationTitle}</if>
+            <if test="version != null  and version != ''"> and version = #{version}</if>
+            <if test="url != null  and url != ''"> and url = #{url}</if>
+            <if test="dateAdded != null "> and date_added = #{dateAdded}</if>
+            <if test="dateModified != null "> and date_modified = #{dateModified}</if>
+            <if test="shorttitle != null  and shorttitle != ''"> and shortTitle = #{shorttitle}</if>
+            <if test="language != null  and language != ''"> and `language` = #{language}</if>
+            <if test="creators != null  and creators != ''"> and creators = #{creators}</if>
+            <if test="seriesText != null  and seriesText != ''"> and series_text = #{seriesText}</if>
+            <if test="itemType != null  and itemType != ''"> and item_type = #{itemType}</if>
+            <if test="date != null "> and date = #{date}</if>
+            <if test="tags != null  and tags != ''"> and tags = #{tags}</if>
+            <if test="volume != null  and volume != ''"> and volume = #{volume}</if>
+            <if test="callNumber != null "> and call_number = #{callNumber}</if>
+            <if test="series != null  and series != ''"> and series = #{series}</if>
+            <if test="relations != null  and relations != ''"> and relations = #{relations}</if>
+        </where>
+    </select>
+
+    <select id="selectBibById" parameterType="Long" resultMap="BibResult">
+        <include refid="selectBibVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertBib" parameterType="Bib">
+        insert into bib
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="title != null">title,</if>
+            <if test="content != null">content,</if>
+            <if test="author != null">author,</if>
+            <if test="abstractNote != null">abstract_note,</if>
+            <if test="libraryCatalog != null">library_catalog,</if>
+            <if test="issue != null">issue,</if>
+            <if test="issn != null">issn,</if>
+            <if test="doi != null">doi,</if>
+            <if test="key != null">`key`,</if>
+            <if test="archiveLocation != null">archive_location,</if>
+            <if test="extra != null">extra,</if>
+            <if test="rights != null">rights,</if>
+            <if test="collections != null">collections,</if>
+            <if test="accessDate != null">access_date,</if>
+            <if test="pages != null">pages,</if>
+            <if test="journalAbbreviation != null">journal_abbreviation,</if>
+            <if test="seriestitle != null">seriesTitle,</if>
+            <if test="publicationTitle != null">publication_title,</if>
+            <if test="version != null">version,</if>
+            <if test="url != null">url,</if>
+            <if test="dateAdded != null">date_added,</if>
+            <if test="dateModified != null">date_modified,</if>
+            <if test="shorttitle != null">shortTitle,</if>
+            <if test="language != null">`language`,</if>
+            <if test="creators != null">creators,</if>
+            <if test="seriesText != null">series_text,</if>
+            <if test="itemType != null">item_type,</if>
+            <if test="date != null">`date`,</if>
+            <if test="tags != null">tags,</if>
+            <if test="volume != null">volume,</if>
+            <if test="callNumber != null">call_number,</if>
+            <if test="series != null">series,</if>
+            <if test="relations != null">relations,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="title != null">#{title},</if>
+            <if test="content != null">#{content},</if>
+            <if test="author != null">#{author},</if>
+            <if test="abstractNote != null">#{abstractNote},</if>
+            <if test="libraryCatalog != null">#{libraryCatalog},</if>
+            <if test="issue != null">#{issue},</if>
+            <if test="issn != null">#{issn},</if>
+            <if test="doi != null">#{doi},</if>
+            <if test="key != null">#{key},</if>
+            <if test="archiveLocation != null">#{archiveLocation},</if>
+            <if test="extra != null">#{extra},</if>
+            <if test="rights != null">#{rights},</if>
+            <if test="collections != null">#{collections},</if>
+            <if test="accessDate != null">#{accessDate},</if>
+            <if test="pages != null">#{pages},</if>
+            <if test="journalAbbreviation != null">#{journalAbbreviation},</if>
+            <if test="seriestitle != null">#{seriestitle},</if>
+            <if test="publicationTitle != null">#{publicationTitle},</if>
+            <if test="version != null">#{version},</if>
+            <if test="url != null">#{url},</if>
+            <if test="dateAdded != null">#{dateAdded},</if>
+            <if test="dateModified != null">#{dateModified},</if>
+            <if test="shorttitle != null">#{shorttitle},</if>
+            <if test="language != null">#{language},</if>
+            <if test="creators != null">#{creators},</if>
+            <if test="seriesText != null">#{seriesText},</if>
+            <if test="itemType != null">#{itemType},</if>
+            <if test="date != null">#{date},</if>
+            <if test="tags != null">#{tags},</if>
+            <if test="volume != null">#{volume},</if>
+            <if test="callNumber != null">#{callNumber},</if>
+            <if test="series != null">#{series},</if>
+            <if test="relations != null">#{relations},</if>
+        </trim>
+    </insert>
+
+    <update id="updateBib" parameterType="Bib">
+        update bib
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="title != null">title = #{title},</if>
+            <if test="content != null">content = #{content},</if>
+            <if test="author != null">author = #{author},</if>
+            <if test="abstractNote != null">abstract_note = #{abstractNote},</if>
+            <if test="libraryCatalog != null">library_catalog = #{libraryCatalog},</if>
+            <if test="issue != null">issue = #{issue},</if>
+            <if test="issn != null">issn = #{issn},</if>
+            <if test="doi != null">doi = #{doi},</if>
+            <if test="key != null">key = #{key},</if>
+            <if test="archiveLocation != null">archive_location = #{archiveLocation},</if>
+            <if test="extra != null">extra = #{extra},</if>
+            <if test="rights != null">rights = #{rights},</if>
+            <if test="collections != null">collections = #{collections},</if>
+            <if test="accessDate != null">access_date = #{accessDate},</if>
+            <if test="pages != null">pages = #{pages},</if>
+            <if test="journalAbbreviation != null">journal_abbreviation = #{journalAbbreviation},</if>
+            <if test="seriestitle != null">seriesTitle = #{seriestitle},</if>
+            <if test="publicationTitle != null">publication_title = #{publicationTitle},</if>
+            <if test="version != null">version = #{version},</if>
+            <if test="url != null">url = #{url},</if>
+            <if test="dateAdded != null">date_added = #{dateAdded},</if>
+            <if test="dateModified != null">date_modified = #{dateModified},</if>
+            <if test="shorttitle != null">shortTitle = #{shorttitle},</if>
+            <if test="language != null">`language` = #{language},</if>
+            <if test="creators != null">creators = #{creators},</if>
+            <if test="seriesText != null">series_text = #{seriesText},</if>
+            <if test="itemType != null">item_type = #{itemType},</if>
+            <if test="date != null">`date` = #{date},</if>
+            <if test="tags != null">tags = #{tags},</if>
+            <if test="volume != null">volume = #{volume},</if>
+            <if test="callNumber != null">call_number = #{callNumber},</if>
+            <if test="series != null">series = #{series},</if>
+            <if test="relations != null">relations = #{relations},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBibById" parameterType="Long">
+        delete from bib where id = #{id}
+    </delete>
+
+    <delete id="deleteBibByIds" parameterType="String">
+        delete from bib where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <delete id="deleteBibAll">
+        delete from bib
+    </delete>
+
+    <update id="resetAutoIncrement" parameterType="string">
+        ALTER TABLE bib AUTO_INCREMENT = 1
+    </update>
+
+</mapper>
